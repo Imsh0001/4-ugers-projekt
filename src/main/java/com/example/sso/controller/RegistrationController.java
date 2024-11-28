@@ -4,32 +4,32 @@ import com.example.sso.dto.RegistrationRequest;
 import com.example.sso.model.Registration;
 import com.example.sso.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/registrations")
 public class RegistrationController {
 
     @Autowired
     private RegistrationService registrationService;
 
-
     @PostMapping
-    public ResponseEntity<Registration> register(@RequestBody Registration registration) {
+    public ResponseEntity<?> register(@RequestBody RegistrationRequest registrationRequest) {
         try {
-            Registration createdRegistration = registrationService.register(registration.getName(),
-                    registration.getLastName(),
-                    registration.getEmail(),
-                    registration.getPassword(),
-                    registration.getMembershipType(),
-                    registration.getDepartment());
-
-            return new ResponseEntity<>(createdRegistration, HttpStatus.CREATED);
+            Registration registration = registrationService.register(
+                    registrationRequest.getName(),
+                    registrationRequest.getLastName(),
+                    registrationRequest.getEmail(),
+                    registrationRequest.getPassword(),
+                    registrationRequest.getMembershipType(),
+                    registrationRequest.getDepartment()
+            );
+            return ResponseEntity.ok(registration);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again.");
         }
     }
-    }
-
+}
