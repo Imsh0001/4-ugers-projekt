@@ -1,7 +1,6 @@
 package com.example.sso.controller;
 
-import com.example.sso.model.Department;
-import com.example.sso.model.MembershipType;
+import com.example.sso.dto.RegistrationRequest;
 import com.example.sso.model.Registration;
 import com.example.sso.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;

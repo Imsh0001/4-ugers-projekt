@@ -10,14 +10,17 @@ public class Booking {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "memberId", nullable = false)
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
+    @JoinColumn(name = "eventId", nullable = false)
     private Event event;
 
-    // Getters and Setters
+    // Constructor
+    public Booking() {}
+
+    // Getters and setters
     public int getId() {
         return id;
     }

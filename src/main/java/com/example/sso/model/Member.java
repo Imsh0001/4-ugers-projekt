@@ -1,15 +1,11 @@
 package com.example.sso.model;
 
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import java.util.Set;
 
 @Entity
 public class Member {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +14,20 @@ public class Member {
     private String lastName;
     private String email;
     private String password;
+    private String department; // Ensure this field exists in Member class
+    private String membershipType;// Ensure this field exists in Member class
 
+    @OneToMany(mappedBy = "member")
+    private Set<Booking> bookings;
+
+
+    public Member() {}
     public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Long id) {
-        this.memberId = id;
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
     public String getName() {
@@ -67,15 +70,11 @@ public class Member {
         this.department = department;
     }
 
-    public MembershipType getMembershipType() {
+    public String getMembershipType() {
         return membershipType;
     }
 
-    public void setMembershipType(MembershipType membershipType) {
+    public void setMembershipType(String membershipType) {
         this.membershipType = membershipType;
     }
-
-    private String department;
-    private MembershipType membershipType;
-
 }

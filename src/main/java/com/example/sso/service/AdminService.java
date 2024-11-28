@@ -15,7 +15,7 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     public Optional<Admin>verifyAdminCredentials(String username, String password) {
-        Optional<Admin> adminOptional = adminRepository.findbyUsername(username);
+        Optional<Admin> adminOptional = adminRepository.findByUsername(username);
         if (adminOptional.isPresent()) {
             Admin admin = adminOptional.get();
             if (admin.getPassword().equals(password)) {

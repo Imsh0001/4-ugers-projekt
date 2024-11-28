@@ -1,45 +1,37 @@
 package com.example.sso.model;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 
 @Entity
-@Table(name = "admin")
 public class Admin {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @Column(name = "admin_id")
-    private int adminId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Automatically increments the admin_id column
+    @Column(name = "admin_id") // Explicitly set the column name to match the database column
+    private Long id;
 
-
-    @Column(name = "username")
     private String username;
-
-
-    @Column(name = "password")
     private String password;
 
-
-    public Admin(String username, String password){
-        this.username = username;
-        this.password = password;
-    }
-
-
-    public Admin() {
-
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-
+    // Getters and setters for username
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    // Getters and setters for password
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

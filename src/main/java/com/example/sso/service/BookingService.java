@@ -23,7 +23,7 @@ public class BookingService {
 
     public Booking bookEvent(Long memberId, Long eventId) {
         // Check if booking already exists
-        if (bookingRepository.existsByMemberIdAndEventId(memberId, eventId)) {
+        if (bookingRepository.existsByMember_memberIdAndEvent_eventId(memberId, eventId)) {
             throw new IllegalArgumentException("Member already booked for this event.");
         }
 
