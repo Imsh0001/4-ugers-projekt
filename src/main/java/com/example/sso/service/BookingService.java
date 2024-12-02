@@ -7,6 +7,7 @@ import com.example.sso.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,8 @@ public class BookingService {
         booking.setEvent(event);
         return bookingRepository.save(booking);
 
+    }
+    public List<Booking> getBookingsForEvent(Long eventId) {
+        return bookingRepository.findByEvent_eventId(eventId);
     }
 }
