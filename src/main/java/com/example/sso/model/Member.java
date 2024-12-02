@@ -77,4 +77,6 @@ public class Member {
     public void setMembershipType(String membershipType) {
         this.membershipType = membershipType;
     }
+
+
 }
