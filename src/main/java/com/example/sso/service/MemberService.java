@@ -51,4 +51,7 @@ public class MemberService {
             throw new IllegalArgumentException("Member not found with ID: " + memberId);
         }
     }
+    public Member saveMember(Member member) {
+        return memberRepository.save(member);
+    }
 }

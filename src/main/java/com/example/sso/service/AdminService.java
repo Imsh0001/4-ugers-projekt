@@ -24,4 +24,8 @@ public class AdminService {
         }
         return Optional.empty();
     }
+
+    public Admin saveAdmin(Admin admin) {
+        return admin;
+    }
 }

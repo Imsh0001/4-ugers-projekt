@@ -5,26 +5,32 @@ import com.example.sso.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@CrossOrigin
+@RequestMapping("/members")
+@CrossOrigin(origins = "http://localhost:63342") // Tillader anmodninger fra frontend
 public class MemberRestController {
-    private MemberService memberService;
 
     @Autowired
-    public void MemberController(MemberService memberService) {
-        this.memberService = memberService;
+    private MemberService memberService;
+
+    @GetMapping
+    public ResponseEntity<List<Member>> fetchAllMembers() {
+        return ResponseEntity.ok(memberService.getAllMembers());
     }
 
     @PostMapping
-    public ResponseEntity<Member> createMember(@RequestBody Member member) {
-        Member createdMember = memberService.createMember(member);
-        return new ResponseEntity<>(createdMember, HttpStatus.CREATED);
+    public ResponseEntity<Member> registerMember(@RequestBody Member member) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.saveMember(member));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMember(@PathVariable Long id) {
+        memberService.deleteMember(id);
+        return ResponseEntity.ok("Member deleted successfully.");
     }
 }
-
 
