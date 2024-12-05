@@ -1,5 +1,6 @@
 package com.example.sso.controller;
 
+import com.example.sso.dto.RegistrationRequest;
 import com.example.sso.model.Member;
 import com.example.sso.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,7 @@ public class MemberRestController {
         memberService.deleteMember(id);
         return ResponseEntity.ok("Member deleted successfully.");
     }
+
 }
+
 

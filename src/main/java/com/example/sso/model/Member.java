@@ -1,11 +1,15 @@
 package com.example.sso.model;
 
-import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Member {
+public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,14 +18,14 @@ public class Member {
     private String lastName;
     private String email;
     private String password;
-    private String department; // Ensure this field exists in Member class
-    private String membershipType;// Ensure this field exists in Member class
+    private String department;
+    private String membershipType;
 
     @OneToMany(mappedBy = "member")
     private Set<Booking> bookings;
 
-
     public Member() {}
+
     public Long getMemberId() {
         return memberId;
     }
@@ -78,5 +82,38 @@ public class Member {
         this.membershipType = membershipType;
     }
 
+    // UserDetails implementation
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Returner brugerens roller som authorities. Du kan udvide dette senere.
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(() -> "ROLE_" + membershipType); // Antag at membershipType bestemmer rollen
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return email; // Brug email som brugernavn
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

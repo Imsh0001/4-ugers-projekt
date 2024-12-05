@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -54,4 +55,28 @@ public class MemberService {
     public Member saveMember(Member member) {
         return memberRepository.save(member);
     }
+    public Member register(String name, String lastName, String email, String password, MembershipType membershipType, Department department) {
+        // Validér data
+        if (name == null || lastName == null || email == null || password == null || membershipType == null || department == null) {
+            throw new IllegalArgumentException("Alle felter skal udfyldes.");
+        }
+
+
+        Optional<Member> existingMember = memberRepository.findByEmail(email);
+        if (existingMember.isPresent()) {
+            throw new IllegalArgumentException("Emailen er allerede registreret.");
+        }
+
+
+        Member member = new Member();
+        member.setName(name);
+        member.setLastName(lastName);
+        member.setEmail(email);
+        member.setPassword(password);
+        member.setMembershipType(membershipType.toString());
+        member.setDepartment(department.toString());
+
+        return memberRepository.save(member);
+    }
 }
+

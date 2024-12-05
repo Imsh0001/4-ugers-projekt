@@ -17,7 +17,9 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
+
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Booking> createBooking(@RequestParam Long memberId, @RequestParam Long eventId) {
         try {
             Booking booking = bookingService.bookEvent(memberId, eventId);
@@ -27,10 +29,12 @@ public class BookingController {
         }
     }
 
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/event/{eventId}")
     public ResponseEntity<List<Booking>> getBookingsForEvent(@PathVariable Long eventId) {
         List<Booking> bookings = bookingService.getBookingsForEvent(eventId);
         return ResponseEntity.ok(bookings);
     }
+
 }
