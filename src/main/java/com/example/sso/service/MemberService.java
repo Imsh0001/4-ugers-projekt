@@ -1,6 +1,8 @@
 package com.example.sso.service;
 
 import com.example.sso.model.Member;
+import com.example.sso.model.MembershipType;
+import com.example.sso.model.Department;
 import com.example.sso.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
