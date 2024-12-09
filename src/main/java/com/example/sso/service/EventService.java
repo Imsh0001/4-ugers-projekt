@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class EventService {
 
@@ -20,6 +19,10 @@ public class EventService {
 
     public Event createEvent(Event event) {
         return eventRepository.save(event);
+    }
+
+    public Event saveEvent(Event event) {
+        return eventRepository.save(event); // Kan håndtere både nye og eksisterende events
     }
 
     public List<Event> getAllEvents() {

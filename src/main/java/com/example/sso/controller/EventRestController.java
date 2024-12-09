@@ -43,4 +43,32 @@ public class EventRestController {
                 "totalRegistrations", bookings.size()
         ));
     }
+    // Create a new event
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        Event newEvent = eventService.saveEvent(event);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newEvent);
+    }
+
+    // Update an existing event
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails) {
+        Optional<Event> existingEvent = eventService.getEventById(id);
+        if (existingEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Event updatedEvent = eventService.updateEvent(id, eventDetails);
+        return ResponseEntity.ok(updatedEvent);
+    }
+
+    // Delete an event
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEvent(@PathVariable Long id) {
+        eventService.deleteEvent(id);
+        return ResponseEntity.ok("Event deleted successfully.");
+    }
+
 }
