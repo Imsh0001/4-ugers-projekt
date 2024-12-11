@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/info") // Basis URL for denne controller
 public class SSOrestcontroller {
 

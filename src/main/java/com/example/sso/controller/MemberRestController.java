@@ -1,6 +1,5 @@
 package com.example.sso.controller;
 
-import com.example.sso.dto.RegistrationRequest;
 import com.example.sso.model.Member;
 import com.example.sso.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/members")
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "http://localhost:63342", allowCredentials = "true")
 public class MemberRestController {
 
     @Autowired
@@ -24,7 +23,7 @@ public class MemberRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Member> registerMember(@RequestBody Member member) {
+    public ResponseEntity<Member> register(@RequestBody Member member) {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.saveMember(member));
     }
 

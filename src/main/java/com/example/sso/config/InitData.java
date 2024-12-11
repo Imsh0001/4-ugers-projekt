@@ -21,7 +21,8 @@ public class InitData {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
+
+@PostConstruct
     public void initializeData() {
         setupAdmins();
         setupMembers();
@@ -41,22 +42,41 @@ public class InitData {
     }
 
     private void setupMembers() {
-        if (memberRepository.count() == 0) {
-            Member member1 = new Member();
-            member1.setName("member1");
-            member1.setPassword(passwordEncoder.encode("member123"));
-            member1.setEmail("member1@example.com");
+        System.out.println("Initializing members. Current count: " + memberRepository.count());
 
+        // Kontroller og tilføj "member1", hvis ikke allerede til stede
+        if (!memberRepository.existsByEmail("azra1@example.com")) {
+            Member member1 = new Member();
+            member1.setName("AZRA");
+            member1.setPassword(passwordEncoder.encode("member123"));
+            member1.setEmail("azra1@example.com");
+
+            memberRepository.save(member1);
+            System.out.println("Saved member: " + member1.getEmail());
+        }
+
+        // Kontroller og tilføj "member2", hvis ikke allerede til stede
+        if (!memberRepository.existsByEmail("member2@example.com")) {
             Member member2 = new Member();
             member2.setName("member2");
             member2.setPassword(passwordEncoder.encode("member123"));
             member2.setEmail("member2@example.com");
 
-            memberRepository.save(member1);
             memberRepository.save(member2);
-            System.out.println("Members initialized.");
-        } else {
-            System.out.println("Members already exist.");
+            System.out.println("Saved member: " + member2.getEmail());
         }
+
+        // Kontroller og tilføj "Natasha", hvis ikke allerede til stede
+        if (!memberRepository.existsByEmail("natasha@gmail.com")) {
+            Member alreadyMember = new Member();
+            alreadyMember.setName("Natasha");
+            alreadyMember.setPassword(passwordEncoder.encode("1234"));
+            alreadyMember.setEmail("natasha@gmail.com");
+
+            memberRepository.save(alreadyMember);
+            System.out.println("Saved member: " + alreadyMember.getEmail());
+        }
+
+        System.out.println("Members initialization completed.");
     }
 }

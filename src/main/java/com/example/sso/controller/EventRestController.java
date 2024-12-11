@@ -10,14 +10,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:63342") // Allow the specific origin
 @RequestMapping("/api/events")
 public class EventRestController {
+
 
     private final EventService eventService;
     private final BookingService bookingService;

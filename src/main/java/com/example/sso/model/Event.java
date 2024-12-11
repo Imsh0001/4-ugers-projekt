@@ -19,6 +19,13 @@ public class Event {
     private LocalDateTime dateTime;
     private LocalDateTime deadline;
 
+    public Event(long l, String s, String s1, String s2, LocalDateTime now, LocalDateTime localDateTime) {
+    }
+
+    public Event() {
+
+    }
+
     // Getter and setter for eventId (ID should match the field name)
     public Long getId() {
         return eventId;
