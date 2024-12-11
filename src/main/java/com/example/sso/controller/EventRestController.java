@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63342") // Allow the specific origin
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/events")
 public class EventRestController {
 
@@ -28,6 +28,14 @@ public class EventRestController {
     public EventRestController(EventService eventService, BookingService bookingService) {
         this.eventService = eventService;
         this.bookingService = bookingService;
+    }
+    @GetMapping
+    public ResponseEntity<List<Event>> getAllEvents() {
+        List<Event> events = eventService.getAllEvents(); // Assuming you have this method in your service
+        if (events.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(events);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -50,8 +58,10 @@ public class EventRestController {
     @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         Event newEvent = eventService.saveEvent(event);
+        System.out.println("Created Event: " + newEvent);  // Debugging output
         return ResponseEntity.status(HttpStatus.CREATED).body(newEvent);
     }
+
 
     // Update an existing event
     @PreAuthorize("hasRole('ADMIN')")
@@ -72,5 +82,22 @@ public class EventRestController {
         eventService.deleteEvent(id);
         return ResponseEntity.ok("Event deleted successfully.");
     }
+    // Member registration for an event
+    @PostMapping("/{id}/register")
+    public ResponseEntity<?> registerMemberForEvent(@PathVariable Long id, @RequestBody Map<String, Long> request) {
+        Long memberId = request.get("memberId");
+        if (memberId == null) {
+            return ResponseEntity.badRequest().body("Member ID is required");
+        }
+
+        try {
+            Booking booking = bookingService.bookEvent(memberId, id);
+            return ResponseEntity.status(HttpStatus.CREATED).body(booking);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
 
 }

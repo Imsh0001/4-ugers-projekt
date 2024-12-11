@@ -12,9 +12,8 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "memberId", nullable = false)
     private Member member;
-
     @ManyToOne
-    @JoinColumn(name = "eventId", nullable = false)
+    @JoinColumn(name = "event_id")
     private Event event;
 
     // Constructor

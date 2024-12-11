@@ -26,8 +26,17 @@ public class EventService {
     }
 
     public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+        try {
+            System.out.println("Fetching all events...");
+            List<Event> events = eventRepository.findAll();
+            System.out.println("Fetched events: " + events.size());
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error fetching events", e);
+        }
     }
+
 
     public Optional<Event> getEventById(Long id) {
         return eventRepository.findById(id);

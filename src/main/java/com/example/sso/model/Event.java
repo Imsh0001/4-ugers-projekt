@@ -1,11 +1,16 @@
 package com.example.sso.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+@Setter
+@Getter
 @Entity
 public class Event {
 
@@ -13,7 +18,12 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventId;
 
+    // Getter and setter for name
+    @Getter
+    @JsonProperty("name") // Ensures this field is included in JSON
     private String name;
+    // Getter and setter for description
+    @Getter
     private String description;
     private String location;
     private LocalDateTime dateTime;
@@ -35,18 +45,8 @@ public class Event {
         this.eventId = id; // Fix the setter to use the parameter
     }
 
-    // Getter and setter for name
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    // Getter and setter for description
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {

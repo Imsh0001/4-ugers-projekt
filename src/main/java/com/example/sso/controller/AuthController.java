@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -44,7 +44,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/signup")
+    @PostMapping("/auth/signup")
     public ResponseEntity<Map<String, String>> signup(@RequestBody Member member) {
         System.out.println("Received signup request: " + member);
 
