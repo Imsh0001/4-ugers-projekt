@@ -1,82 +1,78 @@
 package com.example.sso.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.time.LocalDateTime;
-@Setter
-@Getter
 @Entity
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long eventId;
+    private Long id;
 
-    // Getter and setter for name
-    @Getter
-    @JsonProperty("name") // Ensures this field is included in JSON
     private String name;
-    // Getter and setter for description
-    @Getter
     private String description;
-    private String location;
-    private LocalDateTime dateTime;
-    private LocalDateTime deadline;
+    private String date;
 
-    public Event(long l, String s, String s1, String s2, LocalDateTime now, LocalDateTime localDateTime) {
+    // A set to hold the emails of members who signed up for the event
+    @ElementCollection
+    private Set<String> members = new HashSet<>();
+
+    // Default constructor (necessary for JPA)
+    public Event() {}
+
+    // Constructor with parameters
+    public Event(String name, String description, String date) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
     }
 
-    public Event() {
-
-    }
-
-    // Getter and setter for eventId (ID should match the field name)
+    // Getters and setters
     public Long getId() {
-        return eventId;
+        return id;
     }
 
     public void setId(Long id) {
-        this.eventId = id; // Fix the setter to use the parameter
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    // Getter and setter for location
-    public String getLocation() {
-        return location;
+    public String getDate() {
+        return date;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    // Getter and setter for dateTime
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Set<String> getMembers() {
+        return members;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setMembers(Set<String> members) {
+        this.members = members;
     }
 
-    // Getter and setter for deadline
-    public LocalDateTime getDeadline() {
-        return deadline;
+    // Method to add a member to the event
+    public void addMember(String email) {
+        this.members.add(email);
     }
 
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
-    }
 }

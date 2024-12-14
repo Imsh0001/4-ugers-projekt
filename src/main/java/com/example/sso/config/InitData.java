@@ -1,82 +1,30 @@
 package com.example.sso.config;
 
-import com.example.sso.model.Admin;
-import com.example.sso.model.Member;
-import com.example.sso.repository.AdminRepository;
-import com.example.sso.repository.MemberRepository;
-import jakarta.annotation.PostConstruct;
+import com.example.sso.model.Department;
+import com.example.sso.model.MembershipType;
+import com.example.sso.repository.UserRepository;
+import com.example.sso.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class InitData {
+@Component
+public class InitData implements CommandLineRunner {
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
-    private AdminRepository adminRepository;
+    private UserService userService; // Add this to call the service
 
-    @Autowired
-    private MemberRepository memberRepository;
+    @Override
+    public void run(String... args) {
+        if (userRepository.count() == 0) {
+            // Create an admin user with email
+            userService.createAdmin("admin", "admin@example.com", "adminpass");
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
-@PostConstruct
-    public void initializeData() {
-        setupAdmins();
-        setupMembers();
-    }
-
-    private void setupAdmins() {
-        if (adminRepository.count() == 0) {
-            Admin admin = new Admin();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("admin123"));
-
-            adminRepository.save(admin);
-            System.out.println("Admin initialized.");
-        } else {
-            System.out.println("Admin already exists.");
+            // Create active and passive member users
+            userService.createMember("activeMember", "active@example.com", "activepass", MembershipType.ACTIVE, Department.FUNDING);
+            userService.createMember("passiveMember", "passive@example.com", "passivepass", MembershipType.PASSIVE, null);
         }
-    }
-
-    private void setupMembers() {
-        System.out.println("Initializing members. Current count: " + memberRepository.count());
-
-        // Kontroller og tilføj "member1", hvis ikke allerede til stede
-        if (!memberRepository.existsByEmail("azra1@example.com")) {
-            Member member1 = new Member();
-            member1.setName("AZRA");
-            member1.setPassword(passwordEncoder.encode("member123"));
-            member1.setEmail("azra1@example.com");
-
-            memberRepository.save(member1);
-            System.out.println("Saved member: " + member1.getEmail());
-        }
-
-        // Kontroller og tilføj "member2", hvis ikke allerede til stede
-        if (!memberRepository.existsByEmail("member2@example.com")) {
-            Member member2 = new Member();
-            member2.setName("member2");
-            member2.setPassword(passwordEncoder.encode("member123"));
-            member2.setEmail("member2@example.com");
-
-            memberRepository.save(member2);
-            System.out.println("Saved member: " + member2.getEmail());
-        }
-
-        // Kontroller og tilføj "Natasha", hvis ikke allerede til stede
-        if (!memberRepository.existsByEmail("natasha@gmail.com")) {
-            Member alreadyMember = new Member();
-            alreadyMember.setName("Natasha");
-            alreadyMember.setPassword(passwordEncoder.encode("1234"));
-            alreadyMember.setEmail("natasha@gmail.com");
-
-            memberRepository.save(alreadyMember);
-            System.out.println("Saved member: " + alreadyMember.getEmail());
-        }
-
-        System.out.println("Members initialization completed.");
     }
 }

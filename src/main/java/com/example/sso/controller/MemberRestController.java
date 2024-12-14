@@ -1,38 +1,25 @@
 package com.example.sso.controller;
 
-import com.example.sso.model.Member;
-import com.example.sso.service.MemberService;
+import com.example.sso.model.Event;
+import com.example.sso.model.User;
+import com.example.sso.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:63342")
 @RestController
-@RequestMapping("/members")
-@CrossOrigin(origins = "http://localhost:63342", allowCredentials = "true")
+@RequestMapping("/member")
 public class MemberRestController {
 
     @Autowired
-    private MemberService memberService;
+    private EventService eventService;
 
-    @GetMapping
-    public ResponseEntity<List<Member>> fetchAllMembers() {
-        return ResponseEntity.ok(memberService.getAllMembers());
+    @GetMapping("/getAllEvents")
+    public ResponseEntity<List<Event>> getAllEvents() {
+        List<Event> events = eventService.getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-    @PostMapping
-    public ResponseEntity<Member> register(@RequestBody Member member) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.saveMember(member));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteMember(@PathVariable Long id) {
-        memberService.deleteMember(id);
-        return ResponseEntity.ok("Member deleted successfully.");
-    }
-
 }
-
-
