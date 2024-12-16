@@ -1,12 +1,16 @@
 package com.example.sso.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @Entity
 public class Event {
 
+    // Getters and setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,41 +33,20 @@ public class Event {
         this.date = date;
     }
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getDate() {
-        return date;
-    }
-
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public Set<String> getMembers() {
-        return members;
     }
 
     public void setMembers(Set<String> members) {
