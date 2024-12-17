@@ -87,18 +87,21 @@ public class UserController {
         String username = request.get("username");
         String password = request.get("password");
         try {
-            // Authenticate the user
             User user = userService.authenticate(username, password);
 
-            // Log user info for debugging
-            System.out.println("User logged in: " + user.getUsername() + ", " + user.getEmail() + ", " + user.getRole());
+            Map<String, Object> response = new HashMap<>();
+            response.put("username", user.getUsername());
+            response.put("email", user.getEmail());
+            response.put("role", user.getRole());
+            response.put("membershipStatus", user.getMembershipType() == MembershipType.ACTIVE ? "Active" : "Inactive");
 
-            // Return the user's details
-            return ResponseEntity.ok(Map.of(
-                    "username", user.getUsername(),
-                    "email", user.getEmail(),
-                    "role", user.getRole()
-            ));
+            if (user.getMembershipType() == MembershipType.ACTIVE) {
+                response.put("department", user.getDepartment());
+                response.put("studyField", user.getStudyField());
+                response.put("educationLevel", user.getEducationLevel());
+            }
+
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(400).body(e.getMessage());
         }
