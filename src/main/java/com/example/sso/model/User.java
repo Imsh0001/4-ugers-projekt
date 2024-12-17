@@ -2,7 +2,9 @@ package com.example.sso.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 @Entity
 public class User {
@@ -48,55 +50,16 @@ public class User {
         this.educationLevel = educationLevel;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setMembershipType(MembershipType membershipType) {
-        this.membershipType = membershipType;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
     public String getEducation() {
         return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
     }
 
     public StudyField getStudyField() {
         return studyField;
     }
 
-    public void setStudyField(StudyField studyField) {
-        this.studyField = studyField;
-    }
-
     public String getEducationLevel() {
         return educationLevel;
-    }
-
-    public void setEducationLevel(String educationLevel) {
-        this.educationLevel = educationLevel;
     }
 
 }
