@@ -22,4 +22,9 @@ public class MemberRestController {
         List<Event> events = eventService.getAllEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+    @GetMapping("/events-for-member/{email}")
+    public ResponseEntity<List<Event>> getEventsForMember(@PathVariable String email) {
+        List<Event> memberEvents = eventService.getEventsForMember(email);
+        return new ResponseEntity<>(memberEvents, HttpStatus.OK);
+    }
 }
