@@ -26,7 +26,7 @@ public class Event {
     // A set to hold the emails of members who signed up for the event
     @Setter
     @ElementCollection
-    private Set<String> members = new HashSet<>();
+    private Set<String> members;
 
     public Event(String name, String description, String date) {
     }

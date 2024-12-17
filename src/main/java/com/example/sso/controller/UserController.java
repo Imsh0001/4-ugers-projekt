@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:63342")
@@ -32,6 +33,7 @@ public class UserController {
             return ResponseEntity.status(400).body(e.getMessage());
         }
     }
+
     @PostMapping("/create-member")
     public ResponseEntity<?> createMember(@RequestBody Map<String, String> request) {
         String username = request.get("username");
@@ -85,10 +87,20 @@ public class UserController {
         String username = request.get("username");
         String password = request.get("password");
         try {
+            // Authenticate the user
             User user = userService.authenticate(username, password);
-            return ResponseEntity.ok(Map.of("role", user.getRole()));
+
+            // Log user info for debugging
+            System.out.println("User logged in: " + user.getUsername() + ", " + user.getEmail() + ", " + user.getRole());
+
+            // Return the user's details
+            return ResponseEntity.ok(Map.of(
+                    "username", user.getUsername(),
+                    "email", user.getEmail(),
+                    "role", user.getRole()
+            ));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(400).body(e.getMessage());  // Return the error message
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 }

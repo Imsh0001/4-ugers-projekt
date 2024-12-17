@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -46,4 +47,10 @@ public class EventService {
         eventRepository.save(event);
     }
 
+    public List<Event> getEventsForMember(String memberEmail) {
+        // Antager, at "members" er en liste af e-mails i Event-modellen
+        return eventRepository.findByMembersContaining(memberEmail);
+
+
+    }
 }
