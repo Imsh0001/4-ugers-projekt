@@ -2,6 +2,7 @@ package com.example.sso.service;
 
 import com.example.sso.model.Department;
 import com.example.sso.model.MembershipType;
+import com.example.sso.model.StudyField;
 import com.example.sso.model.User;
 import com.example.sso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,12 @@ public class UserService {
         if (emailExists(email)) {
             throw new RuntimeException("Email already exists");
         }
-        User admin = new User(username, email, password, "ROLE_ADMIN", null, null);
+        User admin = new User(username, email, password, "ROLE_ADMIN", null, null, null,null,null);
         return userRepository.save(admin);
     }
 
     // Create a new member user
-    public User createMember(String username, String email, String password, MembershipType membershipType, Department department) {
+    public User createMember(String username, String email, String password, MembershipType membershipType, Department department, String education, StudyField studyField, String educationLevel) {
         if (usernameExists(username)) {
             throw new RuntimeException("Username already exists");
         }
@@ -52,7 +53,7 @@ public class UserService {
             throw new RuntimeException("Passive members cannot select a department.");
         }
 
-        User member = new User(username, email, password, "ROLE_MEMBER", membershipType, department);
+        User member = new User(username, email, password, "ROLE_MEMBER", membershipType, department,education,studyField,educationLevel);
         return userRepository.save(member);
     }
 

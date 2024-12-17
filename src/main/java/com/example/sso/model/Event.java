@@ -14,20 +14,34 @@ public class Event {
     private String name;
     private String description;
     private String date;
+    private String imageUrl;
 
-    // A set to hold the emails of members who signed up for the event
+
     @ElementCollection
+    @CollectionTable(name = "event_members", joinColumns = @JoinColumn(name = "event_id"))
     private Set<String> members = new HashSet<>();
 
     // Default constructor (necessary for JPA)
     public Event() {}
 
     // Constructor with parameters
-    public Event(String name, String description, String date) {
+    public Event(String name, String description, String date, String imageUrl) {
         this.name = name;
         this.description = description;
         this.date = date;
+        this.imageUrl = imageUrl;
     }
+
+    public String getImageUrl() {
+        return imageUrl != null && !imageUrl.startsWith("/uploads/")
+                ? "/uploads/" + imageUrl
+                : imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 
     // Getters and setters
     public Long getId() {
@@ -74,5 +88,6 @@ public class Event {
     public void addMember(String email) {
         this.members.add(email);
     }
+
 
 }
