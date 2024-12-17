@@ -4,5 +4,6 @@ public enum Department {
     FUNDING,
     SOCIAL_AND_CULTURE,
     RECRUITMENT,
-    MARKETING_AND_CAREER
+    MARKETING_AND_CAREER,
+
 }

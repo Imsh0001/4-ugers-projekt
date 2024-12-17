@@ -2,6 +2,7 @@ package com.example.sso.config;
 
 import com.example.sso.model.Department;
 import com.example.sso.model.MembershipType;
+import com.example.sso.model.StudyField;
 import com.example.sso.repository.UserRepository;
 import com.example.sso.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class InitData implements CommandLineRunner {
             userService.createAdmin("admin", "admin@example.com", "adminpass");
 
             // Create active and passive member users
-            userService.createMember("activeMember", "active@example.com", "activepass", MembershipType.ACTIVE, Department.FUNDING);
-            userService.createMember("passiveMember", "passive@example.com", "passivepass", MembershipType.PASSIVE, null);
+            userService.createMember("activeMember", "active@example.com", "activepass", MembershipType.ACTIVE, Department.FUNDING,"Computer Science", StudyField.ENGINEERING_SCIENCES,"Bachelor");
+            userService.createMember("passiveMember", "passive@example.com", "passivepass", MembershipType.PASSIVE, null, null, null,null);
         }
     }
 }

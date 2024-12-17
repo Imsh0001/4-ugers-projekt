@@ -17,6 +17,12 @@ public class User {
     private String password;
     private String role;
 
+    private String education;
+    @Enumerated(EnumType.STRING)
+    private StudyField studyField;
+
+    private String educationLevel;
+
     @Enumerated(EnumType.STRING)
     private MembershipType membershipType; // ACTIVE or PASSIVE
 
@@ -27,13 +33,16 @@ public class User {
     public User() {}
 
     // Constructor with parameters
-    public User(String username, String email, String password, String role, MembershipType membershipType, Department department) {
+    public User(String username, String email, String password, String role, MembershipType membershipType, Department department, String education, StudyField studyField, String educationLevel) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
         this.membershipType = membershipType;
         this.department = department;
+        this.education = education;
+        this.studyField = studyField;
+        this.educationLevel = educationLevel;
     }
 
     // Getters and setters
@@ -92,4 +101,28 @@ public class User {
     public void setDepartment(Department department) {
         this.department = department;
     }
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public StudyField getStudyField() {
+        return studyField;
+    }
+
+    public void setStudyField(StudyField studyField) {
+        this.studyField = studyField;
+    }
+
+    public String getEducationLevel() {
+        return educationLevel;
+    }
+
+    public void setEducationLevel(String educationLevel) {
+        this.educationLevel = educationLevel;
+    }
+
 }
