@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,14 @@ public class EventRestController {
     private EventService eventService;
 
     @PostMapping
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        Event createdEvent = eventService.createEvent(event);
+    public ResponseEntity<Event> createEvent(
+            @RequestParam String name,
+            @RequestParam String description,
+            @RequestParam String date,
+            @RequestParam MultipartFile image) {
+
+        // Call the service method to create the event
+        Event createdEvent = eventService.createEvent(name, description, date, image);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
     }
 
