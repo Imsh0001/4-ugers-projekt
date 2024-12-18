@@ -22,10 +22,13 @@ public class User {
     private String password;
     private String role;
 
+    @Getter
     private String education;
+    @Getter
     @Enumerated(EnumType.STRING)
     private StudyField studyField;
 
+    @Getter
     private String educationLevel;
 
     @Enumerated(EnumType.STRING)
@@ -35,7 +38,8 @@ public class User {
     private Department department; // Optional; only relevant if membershipType is ACTIVE
 
     // Default constructor (necessary for JPA)
-    public User() {}
+    public User() {
+    }
 
     // Constructor with parameters
     public User(String username, String email, String password, String role, MembershipType membershipType, Department department, String education, StudyField studyField, String educationLevel) {
@@ -49,17 +53,4 @@ public class User {
         this.studyField = studyField;
         this.educationLevel = educationLevel;
     }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public StudyField getStudyField() {
-        return studyField;
-    }
-
-    public String getEducationLevel() {
-        return educationLevel;
-    }
-
 }

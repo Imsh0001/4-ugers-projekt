@@ -93,14 +93,8 @@ public class UserController {
             response.put("username", user.getUsername());
             response.put("email", user.getEmail());
             response.put("role", user.getRole());
-            response.put("membershipStatus", user.getMembershipType() == MembershipType.ACTIVE ? "Active" : "Inactive");
 
-            if (user.getMembershipType() == MembershipType.ACTIVE) {
-                response.put("department", user.getDepartment());
-                response.put("studyField", user.getStudyField());
-                response.put("educationLevel", user.getEducationLevel());
-            }
-
+            // Kun nødvendige oplysninger returneres
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(400).body(e.getMessage());

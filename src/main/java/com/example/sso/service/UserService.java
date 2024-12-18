@@ -32,7 +32,7 @@ public class UserService {
         if (emailExists(email)) {
             throw new RuntimeException("Email already exists");
         }
-        User admin = new User(username, email, password, "ROLE_ADMIN", null, null, null,null,null);
+        User admin = new User(username, email, password, "ROLE_ADMIN", null, null, null, null, null);
         return userRepository.save(admin);
     }
 
@@ -53,7 +53,7 @@ public class UserService {
             throw new RuntimeException("Passive members cannot select a department.");
         }
 
-        User member = new User(username, email, password, "ROLE_MEMBER", membershipType, department,education,studyField,educationLevel);
+        User member = new User(username, email, password, "ROLE_MEMBER", membershipType, department, education, studyField, educationLevel);
         return userRepository.save(member);
     }
 
@@ -62,9 +62,13 @@ public class UserService {
         User user = userRepository.findByUsername(usernameOrEmail)
                 .orElseGet(() -> userRepository.findByEmail(usernameOrEmail)
                         .orElseThrow(() -> new RuntimeException("User not found")));
+        System.out.println("Fetched User: " + user);
+
         if (!user.getPassword().equals(password)) {
             throw new RuntimeException("Invalid password");
         }
+
+        System.out.println("Authenticated User: " + user);
         return user;
     }
 }
