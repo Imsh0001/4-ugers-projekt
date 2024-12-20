@@ -21,10 +21,10 @@ public class Event {
     @CollectionTable(name = "event_members", joinColumns = @JoinColumn(name = "event_id"))
     private Set<String> members = new HashSet<>();
 
-    // Default constructor (necessary for JPA)
+
     public Event() {}
 
-    // Constructor with parameters
+
     public Event(String name, String description, String date, String imageUrl) {
         this.name = name;
         this.description = description;
@@ -43,7 +43,7 @@ public class Event {
     }
 
 
-    // Getters and setters
+
     public Long getId() {
         return id;
     }
@@ -84,7 +84,7 @@ public class Event {
         this.members = members;
     }
 
-    // Method to add a member to the event
+
     public void addMember(String email) {
         this.members.add(email);
     }

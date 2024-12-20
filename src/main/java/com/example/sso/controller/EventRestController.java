@@ -26,7 +26,7 @@ public class EventRestController {
             @RequestParam String date,
             @RequestParam MultipartFile image) {
 
-        // Call the service method to create the event
+
         Event createdEvent = eventService.createEvent(name, description, date, image);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
     }
@@ -54,7 +54,7 @@ public class EventRestController {
         List<Event> events = eventService.getAllEvents();
         return ResponseEntity.ok(events);
     }
-    // Endpoint to add a member to an event
+
     @PostMapping("/addMemberToEvent/{eventId}")
     public ResponseEntity<String> addMemberToEvent(@PathVariable Long eventId, @RequestBody Map<String, String> payload) {
         String memberEmail = payload.get("email");

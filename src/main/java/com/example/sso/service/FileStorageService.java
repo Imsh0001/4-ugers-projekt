@@ -28,8 +28,8 @@ public class FileStorageService {
                 Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
                 System.out.println("Stored file at: " + filePath.toString());
 
-                // Return relative path to file without '/uploads/' prefix again
-                return "uploads/" + fileName; // Relative path (no leading '/')
+
+                return "uploads/" + fileName;
             } catch (IOException e) {
                 throw new RuntimeException("Could not store the file. Error!!: " + e.getMessage());
             }

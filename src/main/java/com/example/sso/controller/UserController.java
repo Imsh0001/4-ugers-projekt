@@ -20,7 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Create Admin with email support
+
     @PostMapping("/create-admin")
     public ResponseEntity<?> createAdmin(@RequestBody Map<String, String> request) {
         String username = request.get("username");
@@ -46,19 +46,19 @@ public class UserController {
         String educationLevel = request.get("educationLevel");
 
         try {
-            // Konverter membershipType til enum
+
             MembershipType membershipType = MembershipType.valueOf(membershipTypeStr.toUpperCase());
             Department department = null;
             StudyField studyField = null;
 
-            // Valider medlemskabstype og afdeling
+
             if (membershipType == MembershipType.ACTIVE) {
                 if (departmentStr == null || departmentStr.isEmpty()) {
                     throw new RuntimeException("Active members must select a department.");
                 }
                 department = Department.valueOf(departmentStr.toUpperCase());
 
-                // StudyField er kun relevant for aktive medlemmer
+
                 if (studyFieldStr != null && !studyFieldStr.isEmpty()) {
                     studyField = StudyField.valueOf(studyFieldStr.toUpperCase());
                 }
@@ -71,7 +71,7 @@ public class UserController {
                 }
             }
 
-            // Opret medlem via UserService
+
             User member = userService.createMember(username, email, password, membershipType, department, education, studyField, educationLevel);
             return ResponseEntity.ok(member);
 
@@ -94,7 +94,7 @@ public class UserController {
             response.put("email", user.getEmail());
             response.put("role", user.getRole());
 
-            // Kun nødvendige oplysninger returneres
+
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(400).body(e.getMessage());

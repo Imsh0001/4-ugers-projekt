@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.sso.model.Event;
 import com.example.sso.service.EventService;
@@ -23,12 +24,14 @@ public class AdminController {
     @Autowired
     FileStorageService fileStorageService;
 
+
+
     @PostMapping("/createEvent")
     public ResponseEntity<Event> createEvent(@RequestParam("name") String name,
                                              @RequestParam("description") String description,
                                              @RequestParam("date") String date,
                                              @RequestParam("image") MultipartFile image) {
-        String imageUrl = fileStorageService.storeFile(image); // Store the image and get the URL
+        String imageUrl = fileStorageService.storeFile(image);
 
         Event event = new Event();
         event.setName(name);
@@ -65,5 +68,8 @@ public class AdminController {
         List<Event> events = eventService.getAllEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+
+
 }
+
 

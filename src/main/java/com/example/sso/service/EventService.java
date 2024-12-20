@@ -20,18 +20,18 @@ public class EventService {
     @Autowired
     private FileStorageService fileStorageService;
     public Event createEvent(String name, String description, String date, MultipartFile image) {
-        // Store the image and get the file URL (or path)
+
         String imageUrl = "/" + fileStorageService.storeFile(image);
 
 
-        // Create a new event and set its properties
+
         Event event = new Event();
         event.setName(name);
         event.setDescription(description);
         event.setDate(date);
-        event.setImageUrl(imageUrl); // Save the file URL to the database
+        event.setImageUrl(imageUrl);
 
-        // Save the event to the database
+
         return eventRepository.save(event);
     }
 
@@ -75,7 +75,7 @@ public class EventService {
     }
 
     public List<Event> getEventsForMember(String memberEmail) {
-        // Antager, at "members" er en liste af e-mails i Event-modellen
+
         return eventRepository.findByMembersContaining(memberEmail);
 
 
